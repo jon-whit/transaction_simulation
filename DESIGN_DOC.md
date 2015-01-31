@@ -23,3 +23,5 @@ Each warehouse in a company is identified via the name of the city (string) wher
 | Scottsdale | *Warehouse("Scottsdale") |
 | Tacoma     | *Warehouse("Tacoma")     |
 Table 2: Representing warehouses.
+
+##Operations:
