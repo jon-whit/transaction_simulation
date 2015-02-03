@@ -6,6 +6,7 @@
  */
 
  #include "FoodItem.h"
+ #include <boost/date_time/gregorian/gregorian.hpp>
 
 FoodItem::FoodItem(std::string _upc, int _shelf_life, std::string _name)
  {
@@ -54,6 +55,16 @@ void FoodItem::set_name(std::string _name)
 std::string FoodItem::get_name() const
 {
   return name;
+}
+
+void FoodItem::set_exp(boost::gregorian::date _d)
+{
+  expiration_date = _d;
+}
+
+boost::gregorian::date FoodItem::get_exp() const
+{
+  return expiration_date;
 }
 
 bool FoodItem::operator<(const FoodItem& rhs) const

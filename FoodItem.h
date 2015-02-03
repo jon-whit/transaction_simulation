@@ -24,6 +24,8 @@ public:
     int get_shelf_life() const; // getter for shelf_life. doesn't modify this.
     void set_name(std::string name); // setter for name
     std::string get_name() const; // getter for name. doesn't modify this.
+    void set_exp(boost::gregorian::date exp_date);
+    boost::gregorian::date get_exp() const;
 
     bool operator<(const FoodItem& rhs) const;
     bool operator==(const FoodItem& rhs) const;
