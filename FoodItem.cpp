@@ -50,3 +50,9 @@ std::string FoodItem::get_name() const
 {
   return name;
 }
+
+bool FoodItem::operator<(const FoodItem& rhs) const
+{
+    return (upc.compare(rhs.upc) < 0);
+}
+
