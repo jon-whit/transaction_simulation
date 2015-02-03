@@ -16,17 +16,19 @@ class FoodItem
 public:
     FoodItem(std::string upc, int, std::string name); // constructor
     FoodItem(const FoodItem &other); // copy constructor
-    
+    ~FoodItem(); // destructor
+
     void set_upc(std::string upc); // setter for UPC
     std::string get_upc() const; // getter for UPC. doesn't modify this.
     void set_shelf_life(int shelf_life); // setter for shelf_life
     int get_shelf_life() const; // getter for shelf_life. doesn't modify this.
     void set_name(std::string name); // setter for name
     std::string get_name() const; // getter for name. doesn't modify this.
-    
+
     bool operator<(const FoodItem& rhs) const;
-    
-    
+    bool operator==(const FoodItem& rhs) const;
+    bool operator!=(const FoodItem& rhs) const;
+
 private:
     std::string upc;
     int shelf_life;

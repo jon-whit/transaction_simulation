@@ -16,18 +16,25 @@
 class Warehouse
 {
 public:
-    Warehouse(std::string _location);
-    
+    Warehouse(std::string _location); // default constructor
+    ~Warehouse(); // destructor
+
 //    Warehouse(const Warehouse & other);
-    
+
     void set_location(std::string _location);
+    std::string get_location() const;
     bool add_food_item(const FoodItem & item);
+
 //    bool remove_food_item(const &FoodItem);
 //    void remove_expired(boost::gregorian::date & current_date);
-    std::string get_location() const;
+
+    std::set<FoodItem> get_inventory() const;
     int get_inventory_count() const;
+
     bool operator<(const Warehouse& rhs) const;
-    
+    bool operator==(const Warehouse& rhs) const;
+    bool operator!=(const Warehouse& rhs) const;
+
 private:
     std::string location;
     int inventory_count;

@@ -21,6 +21,11 @@ FoodItem::FoodItem(const FoodItem &other)
   name = other.name;
 }
 
+FoodItem::~FoodItem()
+{
+
+}
+
 void FoodItem::set_upc(std::string _upc)
 {
   upc = _upc;
@@ -56,3 +61,12 @@ bool FoodItem::operator<(const FoodItem& rhs) const
     return (upc.compare(rhs.upc) < 0);
 }
 
+bool FoodItem::operator==(const FoodItem& rhs) const
+{
+    return (upc.compare(rhs.upc) == 0);
+}
+
+bool FoodItem::operator!=(const FoodItem& rhs) const
+{
+    return (upc.compare(rhs.upc) != 0);
+}
