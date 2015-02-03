@@ -18,11 +18,11 @@ public:
   FoodItem(const FoodItem &other); // copy constructor
 
   void set_upc(std::string upc); // setter for UPC
-  std::string get_upc(); // getter for UPC
+  std::string get_upc() const; // getter for UPC. doesn't modify this.
   void set_shelf_life(int shelf_life); // setter for shelf_life
-  int get_shelf_life(); // getter for shelf_life
+  int get_shelf_life() const; // getter for shelf_life. doesn't modify this.
   void set_name(std::string name); // setter for name
-  std::string get_name(); // getter for name
+  std::string get_name() const; // getter for name. doesn't modify this.
 
 private:
   std::string upc;

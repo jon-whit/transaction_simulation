@@ -26,7 +26,7 @@ void FoodItem::set_upc(std::string _upc)
   upc = _upc;
 }
 
-std::string FoodItem::get_upc()
+std::string FoodItem::get_upc() const
 {
   return upc;
 }
@@ -36,7 +36,7 @@ void FoodItem::set_shelf_life(int _shelf_life)
     shelf_life = _shelf_life;
 }
 
-int FoodItem::get_shelf_life()
+int FoodItem::get_shelf_life() const
 {
   return shelf_life;
 }
@@ -46,7 +46,7 @@ void FoodItem::set_name(std::string _name)
     name = _name;
 }
 
-std::string FoodItem::get_name()
+std::string FoodItem::get_name() const
 {
   return name;
 }
