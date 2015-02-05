@@ -15,7 +15,7 @@ void test_setters();
 void test_operator_less_than();
 void test_add_food_item();
 void test_operator_equal();
-
+void test_remove_food_item();
 
 int main()
 {
@@ -26,6 +26,7 @@ int main()
     test_operator_less_than();
     test_add_food_item();
     test_operator_equal();
+    test_remove_food_item();
 
     std::cout << "TESTS FINISHED..." << std::endl;
 }
@@ -160,4 +161,48 @@ void test_add_food_item()
     }
 
     std::cout << "DONE TESTING ADD FOOD ITEM" << std::endl;
+}
+
+void test_remove_food_item()
+{
+    std::cout << "TESTING REMOVE FOOD ITEM" << std::endl;
+    
+    Warehouse house("Ogden");
+    std::set<FoodItem> test_set;
+    
+    FoodItem item("1234", 3, "Description");
+    test_set.insert(item);
+    FoodItem item2("12345", 3, "Description");
+    test_set.insert(item2);
+    FoodItem item3("12345", 3, "Description");
+    test_set.insert(item3);
+    
+    assert(house.add_food_item(item));
+    assert(house.get_inventory_count() == 1);
+    assert(house.add_food_item(item2));
+    assert(house.get_inventory_count() == 2);
+    assert(house.add_food_item(item3) == 0);
+    assert(house.get_inventory_count() == 2);
+    
+    assert(house.remove_food_item(item));
+    test_set.erase(item);
+    assert(house.get_inventory_count() == 1);
+    assert(house.remove_food_item(item2));
+    test_set.erase(item2);
+    assert(house.get_inventory_count() == 0);
+    
+    std::set<FoodItem> inventory;
+    inventory = house.get_inventory();
+    
+    assert(inventory.size() == test_set.size());
+    
+    std::set<FoodItem>::iterator it;
+    for (it = inventory.begin(); it != inventory.end(); ++it)
+    {
+        FoodItem f = *it;
+        assert (test_set.find(f) != inventory.end());
+        
+    }
+    
+    std::cout << "DONE TESTING REMOVE FOOD ITEM" << std::endl;
 }

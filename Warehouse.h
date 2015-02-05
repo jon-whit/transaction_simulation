@@ -24,9 +24,8 @@ public:
     void set_location(std::string _location);
     std::string get_location() const;
     bool add_food_item(const FoodItem & item);
-
-//    bool remove_food_item(const &FoodItem);
-//    void remove_expired(boost::gregorian::date & current_date);
+    bool remove_food_item(const FoodItem & item );
+    void remove_expired(boost::gregorian::date & current_date);
 
     std::set<FoodItem> get_inventory() const;
     int get_inventory_count() const;

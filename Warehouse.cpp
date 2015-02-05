@@ -20,7 +20,7 @@ Warehouse::Warehouse(std::string _location)
 
 Warehouse::~Warehouse()
 {
-  // inventory will be destructed by the 'set' destructor.
+    // inventory will be destructed by the 'set' destructor.
 }
 
 //Warehouse::Warehouse(const Warehouse & other)
@@ -45,11 +45,30 @@ bool Warehouse::add_food_item(const FoodItem & item)
 
 std::set<FoodItem> Warehouse::get_inventory() const
 {
-  return inventory;
+    return inventory;
 }
 
-//bool remove_food_item(const &FoodItem);
-//void remove_expired(boost::gregorian::date & current_date);
+bool Warehouse::remove_food_item(const FoodItem &item)
+{
+    
+    bool ret = inventory.erase(item);
+    if (ret)
+        inventory_count--;
+    return ret;
+}
+void Warehouse::remove_expired(boost::gregorian::date & current_date)
+{
+    std::set<FoodItem>::iterator it;
+    for (it = inventory.begin(); it != inventory.end(); it++)
+    {
+        boost::gregorian::date exp_date = (*it).get_exp();
+        
+        if (exp_date >= current_date)
+        {
+            remove_food_item(*it);
+        }
+    }
+}
 //std::string location;
 //int inventory_count;
 //    std::set<FoodItem> inventory;
