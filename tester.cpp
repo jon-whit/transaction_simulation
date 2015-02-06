@@ -23,6 +23,6 @@ void test_fileread_debug()
 
     // print out the contents of the file if DEBUG is defined by the
     // pre-processor.
-    //ts.run_simulation(filename);
+    ts.run_simulation(filename);
   }
 }
