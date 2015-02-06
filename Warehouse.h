@@ -9,9 +9,9 @@
 #define WAREHOUSE_H
 
 #include <string>
+#include <map>
+#include <vector>
 #include "FoodItem.h"
-#include <set>
-#include <boost/date_time/gregorian/gregorian.hpp>
 
 class Warehouse
 {
@@ -19,16 +19,10 @@ public:
     Warehouse(std::string _location); // default constructor
     ~Warehouse(); // destructor
 
-//    Warehouse(const Warehouse & other);
-
-    void set_location(std::string _location);
     std::string get_location() const;
-    bool add_food_item(const FoodItem & item);
-    bool remove_food_item(const FoodItem & item );
-    void remove_expired(boost::gregorian::date & current_date);
-
-    std::set<FoodItem> get_inventory() const;
-    int get_inventory_count() const;
+    bool add_food_item(std::string _upc, int n);
+    bool remove_food_item(std::string _upc, int n);
+    void remove_expired();
 
     bool operator<(const Warehouse& rhs) const;
     bool operator==(const Warehouse& rhs) const;
@@ -36,8 +30,7 @@ public:
 
 private:
     std::string location;
-    int inventory_count;
-    std::set<FoodItem> inventory;
+    std::map<std::string, std::vector<FoodItem> > inventory;
 };
 
 #endif

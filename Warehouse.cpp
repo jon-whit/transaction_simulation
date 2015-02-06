@@ -8,79 +8,36 @@
 #include <string>
 #include "FoodItem.h"
 #include "Warehouse.h"
-#include <set>
-#include <boost/date_time/gregorian/gregorian.hpp>
 
 Warehouse::Warehouse(std::string _location)
 {
     location = _location;
-    inventory_count = 0;
-    std::set<FoodItem> inventory;
+    std::map<std::string, std::vector<FoodItem> > inventory;
 }
 
 Warehouse::~Warehouse()
 {
-    // inventory will be destructed by the 'set' destructor.
-}
-
-//Warehouse::Warehouse(const Warehouse & other)
-//{
-//    location = other.location;
-//    inventory_count = other.inventory_count;
-//    iterorator
-//    std::set<FoodItem> inventory
-//}
-
-void Warehouse::set_location(std::string _location)
-{
-    location = _location;
-}
-bool Warehouse::add_food_item(const FoodItem & item)
-{
-    std::pair<std::set<FoodItem>::iterator, bool> ret = inventory.insert(item);
-    if (ret.second)
-        inventory_count++;
-    return ret.second;
-}
-
-std::set<FoodItem> Warehouse::get_inventory() const
-{
-    return inventory;
-}
-
-bool Warehouse::remove_food_item(const FoodItem &item)
-{
     
-    bool ret = inventory.erase(item);
-    if (ret)
-        inventory_count--;
-    return ret;
 }
-void Warehouse::remove_expired(boost::gregorian::date & current_date)
+
+bool Warehouse::add_food_item(std::string _upc, int n)
 {
-    std::set<FoodItem>::iterator it;
-    for (it = inventory.begin(); it != inventory.end(); it++)
-    {
-        boost::gregorian::date exp_date = (*it).get_exp();
-        
-        if (exp_date >= current_date)
-        {
-            remove_food_item(*it);
-        }
-    }
+
 }
-//std::string location;
-//int inventory_count;
-//    std::set<FoodItem> inventory;
+
+bool Warehouse::remove_food_item(std::string _upc, int n)
+{
+
+}
+
+void Warehouse::remove_expired()
+{
+
+}
 
 std::string Warehouse::get_location() const
 {
     return location;
-}
-
-int Warehouse::get_inventory_count() const
-{
-    return inventory_count;
 }
 
 bool Warehouse::operator<(const Warehouse& rhs) const

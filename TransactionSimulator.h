@@ -5,14 +5,30 @@
  * Version: 1.0.0
  */
 
+#ifndef TRANSIM_H
+#define TRANSIM_H
+
 #include "FoodItem.h"
 #include "Warehouse.h"
+#include <string>
+#include <map>
+#include <set>
 
-class TransactionSimluator
+class TransactionSimulator
 {
 public:
-    TransactionSimluator(std::string file_name); //constructor
-    ~TransactionSimulator(); //destructor
-    
-    
+    void run_simulation(std::string file_name);
+    void add_food_item(std::string _upc);
+    void add_warehouse(std::string _location);
+    void get_unstocked_products() const;
+    void get_wellstocked_products() const;
+
+private:
+  std::map<std::string, int> shelf_lives;
+  std::map<std::string, std::string> names;
+  std::map<std::string, Warehouse> warehouses;
+  std::set<FoodItem> unstocked_products;
+  std::set<FoodItem> wellstocked_products;
 };
+
+#endif

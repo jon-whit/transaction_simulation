@@ -6,30 +6,18 @@
  */
 
  #include "FoodItem.h"
- #include <boost/date_time/gregorian/gregorian.hpp>
 
-FoodItem::FoodItem(std::string _upc, int _shelf_life, std::string _name)
+FoodItem::FoodItem(std::string _upc, std::string _name,  int _shelf_life, int _quantity)
  {
    upc = _upc;
-   shelf_life = _shelf_life;
    name = _name;
+   shelf_life = _shelf_life;
+   quantity = _quantity;
  }
-
-FoodItem::FoodItem(const FoodItem &other)
-{
-  upc = other.upc;
-  shelf_life = other.shelf_life;
-  name = other.name;
-}
 
 FoodItem::~FoodItem()
 {
 
-}
-
-void FoodItem::set_upc(std::string _upc)
-{
-  upc = _upc;
 }
 
 std::string FoodItem::get_upc() const
@@ -37,34 +25,14 @@ std::string FoodItem::get_upc() const
   return upc;
 }
 
-void FoodItem::set_shelf_life(int _shelf_life)
-{
-    shelf_life = _shelf_life;
-}
-
 int FoodItem::get_shelf_life() const
 {
   return shelf_life;
 }
 
-void FoodItem::set_name(std::string _name)
-{
-    name = _name;
-}
-
 std::string FoodItem::get_name() const
 {
   return name;
-}
-
-void FoodItem::set_exp(boost::gregorian::date _d)
-{
-  expiration_date = _d;
-}
-
-boost::gregorian::date FoodItem::get_exp() const
-{
-  return expiration_date;
 }
 
 bool FoodItem::operator<(const FoodItem& rhs) const
