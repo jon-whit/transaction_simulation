@@ -7,7 +7,7 @@
 
 #include <string>
 #include <iostream>
-#include <queue>
+#include <deque>
 #include "FoodItem.h"
 #include "Warehouse.h"
 
@@ -21,7 +21,7 @@ Warehouse::Warehouse()
 Warehouse::Warehouse(std::string _location)
 {
     location = _location;
-    std::map<std::string, std::queue<FoodItem> > inventory;
+    std::map<std::string, std::deque<FoodItem> > inventory;
 }
 
 Warehouse::Warehouse(const Warehouse & other)
@@ -36,7 +36,7 @@ void Warehouse::receive_food_item(std::string _upc, int n, int shelf_life)
     for (int i = 0; i < n; i++)
     {
       FoodItem f(_upc, shelf_life, n);
-      inventory[_upc].push(f);
+      inventory[_upc].push_back(f);
     }
 
     #ifdef DEBUG
@@ -51,10 +51,10 @@ void Warehouse::remove_food_item(std::string _upc, int n)
 
   if (items_inventory < n)
     for(int i = 0; i < items_inventory; i++)
-      inventory[_upc].pop();
+      inventory[_upc].pop_front();
   else
     for(int i = 0; i < n; i++)
-      inventory[_upc].pop();
+      inventory[_upc].pop_front();
 
   #ifdef DEBUG
     cout << "REMOVING FOOD ITEMS FROM..." << endl;
@@ -67,26 +67,21 @@ void Warehouse::remove_expired()
 {
 
   // iterate over each of the (key, value) pairs in the inventory
-  map<string, queue<FoodItem> >::iterator it;
+  map<string, deque<FoodItem> >::iterator it;
   for(it = inventory.begin(); it != inventory.end(); it++)
   {
-      string key = it->first;
-
-      cout << "Key: " << key << endl;
+      string upc = it->first;
+      
+      cout << "Warehouse: " << location << endl;
+      cout << "Upc: " << upc << endl;
 
       // iteratre over each of the FoodItems
-      int num_items = inventory[key].size();
+      int num_items = inventory[upc].size();
       for(int i = 0; i < num_items; i++)
       {
-          queue<FoodItem> q = inventory[key];
-          FoodItem f = q.front();
-
-          // remove the food item if it has expired
-          int shelf_life = f.get_shelf_life();
-          if (shelf_life <= 1)
-            remove_food_item(key, 1);
-          else
-            f.set_shelf_life(--shelf_life);
+          inventory[upc][i].decrement_shelf_life();
+          if (inventory[upc][i].get_shelf_life() <= 0)
+            remove_food_item(upc, 1);
       }
   }
 }

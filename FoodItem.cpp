@@ -29,9 +29,9 @@ int FoodItem::get_shelf_life() const
   return shelf_life;
 }
 
-void FoodItem::set_shelf_life(int _shelf_life)
+void FoodItem::decrement_shelf_life()
 {
-  shelf_life = _shelf_life;
+  shelf_life--;
 }
 
 bool FoodItem::operator<(const FoodItem& rhs) const
@@ -52,7 +52,7 @@ bool FoodItem::operator!=(const FoodItem& rhs) const
 FoodItem & FoodItem::operator=(const FoodItem &rhs)
 {
   upc = rhs.upc;
-  shelf_life = rhs.self_life;
+  shelf_life = rhs.shelf_life;
   quantity = rhs.quantity;
   return *this;
 }
