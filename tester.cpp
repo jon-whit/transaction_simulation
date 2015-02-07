@@ -23,7 +23,7 @@ void test_fileread_debug()
 
     TransactionSimulator ts;
 
-    string filename = "data2.txt";
+    string filename = "data1.txt";
 
     // print out the contents of the file if DEBUG is defined by the
     // pre-processor.

@@ -10,7 +10,7 @@
 
 #include <string>
 #include <map>
-#include <vector>
+#include <queue>
 #include "FoodItem.h"
 
 class Warehouse
@@ -32,7 +32,7 @@ public:
 
 private:
     std::string location;
-    std::map<std::string, std::vector<FoodItem> > inventory;
+    std::map<std::string, std::queue<FoodItem> > inventory;
 };
 
 #endif

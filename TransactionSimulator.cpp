@@ -36,6 +36,10 @@ void TransactionSimulator::run_simulation(std::string _filename)
     // instruction.
     if (instruction == "FoodItem") {
 
+      #ifdef DEBUG
+        cout << line << endl;
+      #endif
+
       std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
@@ -44,11 +48,15 @@ void TransactionSimulator::run_simulation(std::string _filename)
 
       // get shelf life using Boost's string -> int cast
       int shelf_life = boost::lexical_cast<int>(params[8]);
-        
+
         string name = line.substr(line.find("Name:") + 6);
 
       add_food_item(upc, name, shelf_life);
     } else if (instruction == "Warehouse") {
+
+      #ifdef DEBUG
+        cout << line << endl;
+      #endif
 
       // parse the warehouse location
       std::vector<std::string> params;
@@ -58,8 +66,12 @@ void TransactionSimulator::run_simulation(std::string _filename)
       // add it to the map of warehouses
       add_warehouse(location);
 
-    } else if (instruction == "Receive" || instruction == "Request") {
-      
+    } else if (instruction == "Receive:" || instruction == "Request:") {
+
+      #ifdef DEBUG
+        cout << line << endl;
+      #endif
+
       std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
@@ -77,21 +89,29 @@ void TransactionSimulator::run_simulation(std::string _filename)
 
       // add or remove the food item to the warehouses inventory depending
       // on the instruction
-      if (instruction == "Receive")
+      if (instruction == "Receive:")
         warehouses[location].receive_food_item(upc, n, shelf_life);
       else
         warehouses[location].remove_food_item(upc, n);
 
-    } else if (instruction == "Next" || instruction == "Start") {
-      // for each warehouse in warehouses:
-      //    decrement each inventory items shelf life.
-      //    remove expired items (i.e. if shelf life = 0)
+    } else if (instruction == "Next") {
 
-      // for(Warehouse wh : warehouses)
-      //      warehouse.remove_expired();
+      cout << line << endl;
 
-      // let remove_expired take care of the rest..
-    } else {
+      // iteratre over each of the warehouses
+      map<string, Warehouse >::iterator it;
+      for(it = warehouses.begin(); it != warehouses.end(); it++)
+      {
+          string location = it->first;
+
+          warehouses[location].remove_expired();
+      }
+
+      #ifdef DEBUG
+        cout << "END NEXT DAY" << endl << endl;
+      #endif
+
+    } else if (instruction == "End") {
       // get_unstocked_products();
       // get_wellstocked_products();
     }

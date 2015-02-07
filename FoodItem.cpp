@@ -29,6 +29,11 @@ int FoodItem::get_shelf_life() const
   return shelf_life;
 }
 
+void FoodItem::set_shelf_life(int _shelf_life)
+{
+  shelf_life = _shelf_life;
+}
+
 bool FoodItem::operator<(const FoodItem& rhs) const
 {
     return (upc.compare(rhs.upc) < 0);
