@@ -36,16 +36,18 @@ void TransactionSimulator::run_simulation(std::string _filename)
     // instruction.
     if (instruction == "FoodItem") {
 
-      /*std::vector<std::string> params;
+      std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
       // get UPC
       string upc = params[4];
 
       // get shelf life using Boost's string -> int cast
-      int shelf_life = boost::lexical_cast<int>(params[7]);
+      int shelf_life = boost::lexical_cast<int>(params[8]);
+        
+        string name = line.substr(line.find("Name:") + 6);
 
-      add_food_item();*/
+      add_food_item(upc, name, shelf_life);
     } else if (instruction == "Warehouse") {
 
       // parse the warehouse location
@@ -57,7 +59,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
       add_warehouse(location);
 
     } else if (instruction == "Receive" || instruction == "Request") {
-      /*
+      
       std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
@@ -78,9 +80,9 @@ void TransactionSimulator::run_simulation(std::string _filename)
       if (instruction == "Receive")
         warehouses[location].receive_food_item(upc, n, shelf_life);
       else
-        warehouses[location].remove_food_item(upc, n);*/
+        warehouses[location].remove_food_item(upc, n);
 
-    } else if (instruction == "Next") {
+    } else if (instruction == "Next" || instruction == "Start") {
       // for each warehouse in warehouses:
       //    decrement each inventory items shelf life.
       //    remove expired items (i.e. if shelf life = 0)
@@ -96,19 +98,16 @@ void TransactionSimulator::run_simulation(std::string _filename)
   }
 }
 
-void TransactionSimulator::add_food_item(string upc)
+void TransactionSimulator::add_food_item(string upc, string name, int shelf_life)
 {
-  //shelf_lives[upc] = shelf_life;
-  //names[upc] = name;
+  shelf_lives[upc] = shelf_life;
+  names[upc] = name;
 
   #ifdef DEBUG
-    //cout << "ADDED FOOD ITEM: '" << upc << "'" << endl;
-
-
-    //cout << "ADDED FOOD ITEM: " << upc << endl;
-    //cout << "Name: " << name << endl;
-    //cout << "Shelf Life: " << shelf_life << endl;
-    //cout << "'" << food_items.size() << "' ITEM(S) TOTAL" << endl;
+    cout << "ADDED FOOD ITEM: " << upc << endl;
+    cout << "Name: " << name << endl;
+    cout << "Shelf Life: " << shelf_life << endl << endl;
+//    cout << "'" << food_items.size() << "' ITEM(S) TOTAL" << endl;
   #endif
 }
 
@@ -118,8 +117,8 @@ void TransactionSimulator::add_warehouse(string location)
   warehouses[location] = h;
 
   #ifdef DEBUG
-    cout << "ADDED WAREHOUSE: '" << location << "'" << endl;
-    cout << "'" << warehouses.size() << "' WAREHOUSE(S) TOTAL" << endl;
+    cout << "ADDED WAREHOUSE: " << location << endl;
+    cout << warehouses.size() << " WAREHOUSE(S) TOTAL" << endl << endl;
   #endif
 }
 

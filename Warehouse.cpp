@@ -8,10 +8,13 @@
 #include <string>
 #include "FoodItem.h"
 #include "Warehouse.h"
+#include <iostream>
+
+using namespace std;
 
 Warehouse::Warehouse()
 {
-
+    
 }
 
 Warehouse::Warehouse(std::string _location)
@@ -22,23 +25,30 @@ Warehouse::Warehouse(std::string _location)
 
 Warehouse::Warehouse(const Warehouse & other)
 {
-  location = other.location;
-  inventory = other.inventory;
+    location = other.location;
+    inventory = other.inventory;
 }
 
-bool Warehouse::receive_food_item(std::string _upc, int n)
+void Warehouse::receive_food_item(std::string _upc, int n, int shelf_life)
 {
-
+    FoodItem f(_upc, shelf_life, n);
+    inventory[_upc].push_back(f);
+    
+#ifdef DEBUG
+    cout << "ADDED FOOD ITEM: " << _upc << " to warehouse " << location << endl;
+    cout << "Quantity: " << n << endl << endl;
+    //    cout << "'" << food_items.size() << "' ITEM(S) TOTAL" << endl;
+#endif
 }
 
-bool Warehouse::remove_food_item(std::string _upc, int n)
+void Warehouse::remove_food_item(std::string _upc, int n)
 {
-
+    
 }
 
 void Warehouse::remove_expired()
 {
-
+    
 }
 
 std::string Warehouse::get_location() const

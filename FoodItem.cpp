@@ -7,10 +7,9 @@
 
  #include "FoodItem.h"
 
-FoodItem::FoodItem(std::string _upc, std::string _name,  int _shelf_life, int _quantity)
+FoodItem::FoodItem(std::string _upc,  int _shelf_life, int _quantity)
  {
    upc = _upc;
-   name = _name;
    shelf_life = _shelf_life;
    quantity = _quantity;
  }
@@ -28,11 +27,6 @@ std::string FoodItem::get_upc() const
 int FoodItem::get_shelf_life() const
 {
   return shelf_life;
-}
-
-std::string FoodItem::get_name() const
-{
-  return name;
 }
 
 bool FoodItem::operator<(const FoodItem& rhs) const

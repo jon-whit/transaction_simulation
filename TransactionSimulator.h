@@ -20,7 +20,7 @@ public:
     TransactionSimulator(); // default constructor
     
     void run_simulation(std::string file_name);
-    void add_food_item(std::string _upc);
+    void add_food_item(std::string _upc, std::string _name, int _shelf_life);
     void add_warehouse(std::string _location);
     void get_unstocked_products() const;
     void get_wellstocked_products() const;

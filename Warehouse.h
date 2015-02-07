@@ -21,8 +21,8 @@ public:
     Warehouse(const Warehouse & other); // copy constructor
 
     std::string get_location() const;
-    bool receive_food_item(std::string _upc, int n);
-    bool remove_food_item(std::string _upc, int n);
+    void receive_food_item(std::string _upc, int n, int shelf_life);
+    void remove_food_item(std::string _upc, int n);
     void remove_expired();
 
     bool operator<(const Warehouse& rhs) const;

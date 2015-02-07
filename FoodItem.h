@@ -13,7 +13,7 @@
 class FoodItem
 {
 public:
-    FoodItem(std::string _upc,  std::string _name, int _shelf_life, int _quantity); // constructor
+    FoodItem(std::string _upc, int _shelf_life, int _quantity); // constructor
     ~FoodItem(); // destructor
 
     std::string get_upc() const; // getter for UPC. doesn't modify this.
