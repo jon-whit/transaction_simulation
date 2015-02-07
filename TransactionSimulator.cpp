@@ -2,6 +2,7 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <iterator>
 #include "TransactionSimulator.h"
 #include "Warehouse.h"
 #include "FoodItem.h"
@@ -112,7 +113,8 @@ void TransactionSimulator::run_simulation(std::string _filename)
       #endif
 
     } else if (instruction == "End") {
-      // get_unstocked_products();
+        cout << "Report by Jonathan Whitaker and Christopher Hartley" << endl << endl;
+       get_unstocked_products();
       // get_wellstocked_products();
     }
   }
@@ -144,7 +146,20 @@ void TransactionSimulator::add_warehouse(string location)
 
 void TransactionSimulator::get_unstocked_products() const
 {
-
+    map<string, string>::iterator it;
+    for (it = names.begin(); it != names.end(); it++) {
+        bool stocked = false;
+        string upc = it->first;
+        
+        map<string, Warehouse>::iterator it2;
+        for (it2 = warehouses.begin(); it2 != warehouses.end(); it2++)
+            if (it2->second.item_count(upc) != 0)
+                stocked = true;
+        
+        if (!stocked)
+            cout << upc << " " << names[upc] << endl;
+    }
+    cout << endl;
 }
 
 void TransactionSimulator::get_wellstocked_products() const

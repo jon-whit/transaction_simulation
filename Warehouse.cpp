@@ -91,6 +91,12 @@ std::string Warehouse::get_location() const
     return location;
 }
 
+int Warehouse::item_count(string upc)
+{
+    int count = inventory[upc].size();
+    return count;
+}
+
 bool Warehouse::operator<(const Warehouse& rhs) const
 {
     return (location.compare(rhs.location) < 0);

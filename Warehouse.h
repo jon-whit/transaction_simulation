@@ -24,6 +24,7 @@ public:
     void receive_food_item(std::string _upc, int n, int shelf_life);
     void remove_food_item(std::string _upc, int n);
     void remove_expired();
+    int item_count(std::string upc) ;
 
     bool operator<(const Warehouse& rhs) const;
     bool operator==(const Warehouse& rhs) const;
