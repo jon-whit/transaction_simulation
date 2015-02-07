@@ -48,3 +48,11 @@ bool FoodItem::operator!=(const FoodItem& rhs) const
 {
     return (upc.compare(rhs.upc) != 0);
 }
+
+FoodItem & FoodItem::operator=(const FoodItem &rhs)
+{
+  upc = rhs.upc;
+  shelf_life = rhs.self_life;
+  quantity = rhs.quantity;
+  return *this;
+}

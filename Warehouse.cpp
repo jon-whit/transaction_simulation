@@ -66,7 +66,7 @@ void Warehouse::remove_food_item(std::string _upc, int n)
 void Warehouse::remove_expired()
 {
 
-  // iteratre over each of the (key, value) pairs in the inventory
+  // iterate over each of the (key, value) pairs in the inventory
   map<string, queue<FoodItem> >::iterator it;
   for(it = inventory.begin(); it != inventory.end(); it++)
   {
