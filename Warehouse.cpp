@@ -9,18 +9,24 @@
 #include "FoodItem.h"
 #include "Warehouse.h"
 
+Warehouse::Warehouse()
+{
+
+}
+
 Warehouse::Warehouse(std::string _location)
 {
     location = _location;
     std::map<std::string, std::vector<FoodItem> > inventory;
 }
 
-Warehouse::~Warehouse()
+Warehouse::Warehouse(const Warehouse & other)
 {
-    
+  location = other.location;
+  inventory = other.inventory;
 }
 
-bool Warehouse::add_food_item(std::string _upc, int n)
+bool Warehouse::receive_food_item(std::string _upc, int n)
 {
 
 }
@@ -53,4 +59,11 @@ bool Warehouse::operator==(const Warehouse& rhs) const
 bool Warehouse::operator!=(const Warehouse& rhs) const
 {
     return (location.compare(rhs.location) != 0);
+}
+
+Warehouse & Warehouse::operator=(const Warehouse & rhs)
+{
+    location = rhs.location;
+    inventory = rhs.inventory;
+    return *this;
 }

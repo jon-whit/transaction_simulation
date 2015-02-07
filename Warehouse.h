@@ -16,17 +16,19 @@
 class Warehouse
 {
 public:
-    Warehouse(std::string _location); // default constructor
-    ~Warehouse(); // destructor
+    Warehouse(); // default constructor
+    Warehouse(std::string _location);
+    Warehouse(const Warehouse & other); // copy constructor
 
     std::string get_location() const;
-    bool add_food_item(std::string _upc, int n);
+    bool receive_food_item(std::string _upc, int n);
     bool remove_food_item(std::string _upc, int n);
     void remove_expired();
 
     bool operator<(const Warehouse& rhs) const;
     bool operator==(const Warehouse& rhs) const;
     bool operator!=(const Warehouse& rhs) const;
+    Warehouse& operator=(const Warehouse & rhs);
 
 private:
     std::string location;

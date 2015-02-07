@@ -17,6 +17,8 @@
 class TransactionSimulator
 {
 public:
+    TransactionSimulator(); // default constructor
+    
     void run_simulation(std::string file_name);
     void add_food_item(std::string _upc);
     void add_warehouse(std::string _location);
