@@ -12,13 +12,12 @@
 #include "Warehouse.h"
 #include <string>
 #include <map>
-#include <set>
 
 class TransactionSimulator
 {
 public:
     TransactionSimulator(); // default constructor
-    
+
     void run_simulation(std::string file_name);
     void add_food_item(std::string _upc, std::string _name, int _shelf_life);
     void add_warehouse(std::string _location);
@@ -29,8 +28,6 @@ private:
   std::map<std::string, int> shelf_lives;
   std::map<std::string, std::string> names;
   std::map<std::string, Warehouse> warehouses;
-  std::set<FoodItem> unstocked_products;
-  std::set<FoodItem> wellstocked_products;
 };
 
 #endif
