@@ -5,7 +5,7 @@ An application to perform an analysis of inventory for a small wholesale food pr
 -----------
 To build our application simply invoke `g++ main.cpp FoodItem.cpp Warehouse.cpp TransactionSimulator.cpp`. This will create an object file `a.out` that executes the main entry point found in the `main.cpp` source file.
 
-DO NOT COMPILE THE `tester.cpp` and `main.cpp` source files together. This will cause an issue as they both
+**DO NOT** COMPILE THE `tester.cpp` and `main.cpp` source files together. This will cause an issue as they both
 define main entry points.
 
 ## Running the Application
