@@ -93,6 +93,41 @@ void test_file()
         assert( wh.item_count("000000") == 1 );
         assert( wh.item_count("111111") == 10 );
 
-        cout << "TESTING WAREHOUSE ADDING ITEMS/REMOVE EXPIRED... " << endl << endl;
+        cout << "DONE TESTING WAREHOUSE ADDING ITEMS/REMOVE EXPIRED... " << endl << endl;
     }
+    
+    {
+        cout << "TESTING WAREHOUSE REQUESTS... " << endl;
+        
+        //testing that nothing happens to an empty warehouse
+        Warehouse wh("Salt Lake City");
+        
+        //start receiving food items
+        wh.receive_food_item( "1111", 1, 3 );
+        wh.receive_food_item( "2222", 5, 3 );
+        wh.receive_food_item( "3333", 10, 3 );
+        wh.receive_food_item( "4444", 15, 3 );
+        wh.receive_food_item( "5555", 20, 3 );
+        assert( wh.get_inventory_size() == 5);
+
+        //try taking more that a warehouse has
+        wh.remove_food_item("1111", 2);
+        assert( wh.item_count("1111") == 0 );
+        wh.remove_food_item("5555", 20);
+        assert( wh.item_count("5555") == 0 );
+        
+        //try taking a few items
+        wh.remove_food_item("2222", 2);
+        assert( wh.item_count("2222") == 3 );
+        
+        //try taking the exact amoung of items
+        wh.remove_food_item("3333", 10);
+        assert( wh.item_count("3333") == 0 );
+        wh.remove_food_item("4444", 15);
+        assert( wh.item_count("4444") == 0 );
+
+        
+        cout << "DONE TESTING WAREHOUSE REQUESTS... " << endl << endl;
+    }
+    
 }
