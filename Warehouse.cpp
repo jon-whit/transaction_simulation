@@ -96,7 +96,7 @@ std::string Warehouse::get_location() const
 int Warehouse::item_count(string upc)
 {
 
-  if ( m.find("f") == m.end() ) {
+  if ( inventory.find(upc) == m.end() ) {
     return 0;
   } else {
     int count = inventory[upc].size();
