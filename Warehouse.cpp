@@ -50,7 +50,7 @@ void Warehouse::remove_food_item(std::string _upc, int n)
   if ( inventory.find(_upc) == inventory.end() ) {
       return;
   } else {
-    
+
     int items_inventory = inventory[_upc].size();
 
     if (items_inventory < n)
