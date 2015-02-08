@@ -1,7 +1,7 @@
 /**
- * Name: TransactionSimluator.cpp
+ * Name: TransactionSimluator.h
  * Authors: Jonathan Whitaker & Christopher Hartley
- * Last Modified: 02/05/2015
+ * Last Modified: 02/08/2015
  * Version: 1.0.0
  */
 

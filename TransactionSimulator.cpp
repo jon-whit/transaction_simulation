@@ -1,3 +1,10 @@
+/**
+ * Name: TransactionSimulator.cpp
+ * Authors: Jonathan Whitaker & Christopher Hartley
+ * Last Modified: 02/08/2015
+ * Version: 1.0.0
+ */
+
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -47,7 +54,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
       // get shelf life using Boost's string -> int cast
       int shelf_life = boost::lexical_cast<int>(params[8]);
 
-        string name = line.substr(line.find("Name:") + 6);
+      string name = line.substr(line.find("Name:") + 6);
 
       add_food_item(upc, name, shelf_life);
     } else if (instruction == "Warehouse") {
@@ -121,6 +128,8 @@ void TransactionSimulator::run_simulation(std::string _filename)
 
 void TransactionSimulator::add_food_item(string upc, string name, int shelf_life)
 {
+  // add an association between the UPC of the product and its shelf life and
+  // name
   shelf_lives[upc] = shelf_life;
   names[upc] = name;
 
@@ -133,6 +142,8 @@ void TransactionSimulator::add_food_item(string upc, string name, int shelf_life
 
 void TransactionSimulator::add_warehouse(string location)
 {
+  // add an association between the location of the warehouse and the
+  // Warehouse object itself
   Warehouse h(location);
   warehouses[location] = h;
 
