@@ -14,7 +14,7 @@ void test_fileread_debug()
   {
     TransactionSimulator ts;
 
-    string filename = "data3.txt";
+    string filename = "data1.txt";
 
     ts.run_simulation(filename);
   }
