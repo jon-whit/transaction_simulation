@@ -47,20 +47,25 @@ void Warehouse::receive_food_item(std::string _upc, int n, int shelf_life)
 
 void Warehouse::remove_food_item(std::string _upc, int n)
 {
-  int items_inventory = inventory[_upc].size();
+  if ( inventory.find(_upc) == inventory.end() ) {
+      return;
+  } else {
+    
+    int items_inventory = inventory[_upc].size();
 
-  if (items_inventory < n)
-    for(int i = 0; i < items_inventory; i++)
-      inventory[_upc].pop_front();
-  else
-    for(int i = 0; i < n; i++)
-      inventory[_upc].pop_front();
+    if (items_inventory < n)
+      for(int i = 0; i < items_inventory; i++)
+        inventory[_upc].pop_front();
+    else
+      for(int i = 0; i < n; i++)
+        inventory[_upc].pop_front();
 
-  #ifdef DEBUG
-    cout << "REMOVING FOOD ITEMS FROM..." << endl;
-    cout << "# Items Before Removal: " << items_inventory << endl;
-    cout << "# Items After Removal: " << inventory[_upc].size() << endl << endl;
-  #endif
+    #ifdef DEBUG
+      cout << "REMOVING FOOD ITEMS FROM..." << endl;
+      cout << "# Items Before Removal: " << items_inventory << endl;
+      cout << "# Items After Removal: " << inventory[_upc].size() << endl << endl;
+    #endif
+  }
 }
 
 void Warehouse::remove_expired()
@@ -96,13 +101,19 @@ std::string Warehouse::get_location() const
 int Warehouse::item_count(string upc)
 {
 
-  if ( inventory.find(upc) == m.end() ) {
+  if ( inventory.find(upc) == inventory.end() ) {
     return 0;
   } else {
     int count = inventory[upc].size();
     return count;
   }
 }
+
+int Warehouse::get_inventory_size() const
+{
+    return inventory.size();
+}
+
 
 bool Warehouse::operator<(const Warehouse& rhs) const
 {
