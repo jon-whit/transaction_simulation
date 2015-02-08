@@ -71,9 +71,11 @@ void Warehouse::remove_expired()
   for(it = inventory.begin(); it != inventory.end(); it++)
   {
       string upc = it->first;
-      
-      cout << "Warehouse: " << location << endl;
-      cout << "Upc: " << upc << endl;
+
+      #ifdef DEBUG
+        cout << "Warehouse: " << location << endl;
+        cout << "Upc: " << upc << endl;
+      #endif
 
       // iteratre over each of the FoodItems
       int num_items = inventory[upc].size();

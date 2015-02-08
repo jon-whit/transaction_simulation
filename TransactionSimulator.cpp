@@ -2,7 +2,6 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
-#include <iterator>
 #include "TransactionSimulator.h"
 #include "Warehouse.h"
 #include "FoodItem.h"
@@ -17,8 +16,6 @@ TransactionSimulator::TransactionSimulator()
   map<string, int> shelf_lives;
   map<string, string> names;
   map<string, Warehouse> warehouses;
-  set<FoodItem> unstocked_products;
-  set<FoodItem> wellstocked_products;
 }
 
 void TransactionSimulator::run_simulation(std::string _filename)
@@ -97,7 +94,9 @@ void TransactionSimulator::run_simulation(std::string _filename)
 
     } else if (instruction == "Next") {
 
-      cout << line << endl;
+      #ifdef DEBUG
+        cout << line << endl;
+      #endif
 
       // iteratre over each of the warehouses
       map<string, Warehouse >::iterator it;
@@ -113,9 +112,9 @@ void TransactionSimulator::run_simulation(std::string _filename)
       #endif
 
     } else if (instruction == "End") {
-        cout << "Report by Jonathan Whitaker and Christopher Hartley" << endl << endl;
+       cout << "Report by Jonathan Whitaker and Christopher Hartley" << endl << endl;
        get_unstocked_products();
-      // get_wellstocked_products();
+       get_wellstocked_products();
     }
   }
 }
@@ -129,7 +128,6 @@ void TransactionSimulator::add_food_item(string upc, string name, int shelf_life
     cout << "ADDED FOOD ITEM: " << upc << endl;
     cout << "Name: " << name << endl;
     cout << "Shelf Life: " << shelf_life << endl << endl;
-//    cout << "'" << food_items.size() << "' ITEM(S) TOTAL" << endl;
   #endif
 }
 
@@ -144,25 +142,62 @@ void TransactionSimulator::add_warehouse(string location)
   #endif
 }
 
-void TransactionSimulator::get_unstocked_products() const
+void TransactionSimulator::get_unstocked_products()
 {
-    map<string, string>::iterator it;
-    for (it = names.begin(); it != names.end(); it++) {
+    cout << "Unstocked Products:" << endl;
+
+    // iterate over each of the UPCs that could be stored in one
+    // of the warehouses.
+    std::map<string, string>::iterator it;
+    for (it = names.begin(); it != names.end(); it++)
+    {
         bool stocked = false;
         string upc = it->first;
-        
-        map<string, Warehouse>::iterator it2;
-        for (it2 = warehouses.begin(); it2 != warehouses.end(); it2++)
-            if (it2->second.item_count(upc) != 0)
+
+        // iterate over each of the warehouses and check if their
+        // inventory contains a positive quantity of that item.
+        map<string, Warehouse>::iterator w_it;
+        for (w_it = warehouses.begin(); w_it != warehouses.end(); w_it++)
+            if (w_it->second.item_count(upc) != 0)
+            {
                 stocked = true;
-        
+                break;
+            }
+
+        // the item is unstocked if it wasn't in stock in any
+        // warehouse.
         if (!stocked)
             cout << upc << " " << names[upc] << endl;
     }
     cout << endl;
 }
 
-void TransactionSimulator::get_wellstocked_products() const
+void TransactionSimulator::get_wellstocked_products()
 {
+  cout << "Well-Stocked Products:" << endl;
 
+  // iterate over each of the UPCs that could be stored in one
+  // of the warehouses.
+  std::map<string, string>::iterator it;
+  for (it = names.begin(); it != names.end(); it++)
+  {
+      int warehouse_count = 0;
+      string upc = it->first;
+
+      // iterate over each of the warehouses and check if their
+      // inventory contains a positive quantity of that item.
+      map<string, Warehouse>::iterator w_it;
+      for (w_it = warehouses.begin(); w_it != warehouses.end(); w_it++)
+          if (w_it->second.item_count(upc) != 0)
+          {
+            warehouse_count++;
+          }
+
+      // the item is well stocked if two or more warehouses carried
+      // the item.
+      if (warehouse_count > 1)
+          cout << upc << " " << names[upc] << endl;
+  }
+
+  cout << endl;
 }
