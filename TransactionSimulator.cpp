@@ -27,7 +27,7 @@ TransactionSimulator::TransactionSimulator()
 
 void TransactionSimulator::run_simulation(std::string _filename)
 {
-  ifstream infile( _filename );
+  ifstream infile( _filename.c_str());
 
   for( string line; getline( infile, line ); )
   {
