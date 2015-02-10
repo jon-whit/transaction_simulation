@@ -84,12 +84,16 @@ void Warehouse::remove_expired()
 
       // iteratre over each of the FoodItems
       int num_items = inventory[upc].size();
+      int expired_items = 0;
       for(int i = 0; i < num_items; i++)
       {
           inventory[upc][i].decrement_shelf_life();
           if (inventory[upc][i].get_shelf_life() <= 0)
-            remove_food_item(upc, 1);
+	    expired_items++;
       }
+
+      // remove the number of expired items
+      remove_food_item(upc, expired_items);
   }
 }
 
