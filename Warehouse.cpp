@@ -84,7 +84,7 @@ void Warehouse::remove_expired()
         cout << "Upc: " << upc << endl;
       #endif
 
-      // iteratre over each of the FoodItems
+      // iterate over each of the FoodItems
       int num_items = inventory[upc].size();
       int expired_items = 0;
       for(int i = 0; i < num_items; i++)
