@@ -18,14 +18,14 @@ public:
 
     std::string get_upc() const; // getter for UPC. doesn't modify this.
     std::string get_name() const; // getter for name. doesn't modify this.
-    int get_shelf_life() const;
-    void decrement_shelf_life();
-    int get_quantity() const;
+    int get_shelf_life() const; // getter for shelf_life. doesn't modify this.
+    void decrement_shelf_life(); // decrements the shelf life of this FoodItem.
+    int get_quantity() const; // getter for the quantity. doesn't modify this.
 
-    bool operator<(const FoodItem& rhs) const;
-    bool operator==(const FoodItem& rhs) const;
-    bool operator!=(const FoodItem& rhs) const;
-    FoodItem & operator=(const FoodItem &rhs);
+    bool operator<(const FoodItem& rhs) const; // compares based on UPC
+    bool operator==(const FoodItem& rhs) const; // checks equality between UPC
+    bool operator!=(const FoodItem& rhs) const; // complement of ==
+    FoodItem & operator=(const FoodItem &rhs); 
 
 
 private:

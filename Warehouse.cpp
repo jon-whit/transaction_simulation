@@ -47,6 +47,8 @@ void Warehouse::receive_food_item(std::string _upc, int n, int shelf_life)
 
 void Warehouse::remove_food_item(std::string _upc, int n)
 {
+  // if the item doesn't exist in the warehouse, return. otherwise
+  // remove the desired number of items.
   if ( inventory.find(_upc) == inventory.end() ) {
       return;
   } else {

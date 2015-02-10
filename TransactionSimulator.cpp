@@ -27,8 +27,10 @@ TransactionSimulator::TransactionSimulator()
 
 void TransactionSimulator::run_simulation(std::string _filename)
 {
+  // read in the input file
   ifstream infile( _filename.c_str());
 
+  // read the input file in line by line
   for( string line; getline( infile, line ); )
   {
 
@@ -45,6 +47,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
         cout << line << endl;
       #endif
 
+      // split the line based on whitespace
       std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
@@ -77,6 +80,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
         cout << line << endl;
       #endif
 
+      // split the line based on whitespace
       std::vector<std::string> params;
       boost::split(params, line, boost::is_any_of(" "));
 
@@ -105,7 +109,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
         cout << line << endl;
       #endif
 
-      // iteratre over each of the warehouses
+      // iterator over each of the warehouses
       map<string, Warehouse >::iterator it;
       for(it = warehouses.begin(); it != warehouses.end(); it++)
       {

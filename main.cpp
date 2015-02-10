@@ -12,9 +12,12 @@ using namespace std;
 int main (int argc, char* argv[])
 {
 
+    // create the TransactionSimulator object
     TransactionSimulator ts;
 
+    // get the file name from the parameter
     string filename = argv[1];
 
+    // run the simulation
     ts.run_simulation(filename);
 }

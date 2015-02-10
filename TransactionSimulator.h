@@ -18,11 +18,16 @@ class TransactionSimulator
 public:
     TransactionSimulator(); // default constructor
 
-    void run_simulation(std::string file_name);
+    void run_simulation(std::string file_name); // runs the overall simulation
+
+    // adds an association between a UPC, its name, and its shelf life
     void add_food_item(std::string _upc, std::string _name, int _shelf_life);
+
+    // adds an association between a warehouse location and the warehouse
+    // object
     void add_warehouse(std::string _location);
-    void get_unstocked_products();
-    void get_wellstocked_products();
+    void get_unstocked_products(); // reports the unstocked products
+    void get_wellstocked_products(); // reports the wellstocked products
 
 private:
   std::map<std::string, int> shelf_lives;
