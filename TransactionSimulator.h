@@ -12,6 +12,7 @@
 #include "Warehouse.h"
 #include <string>
 #include <map>
+#include <queue>
 
 class TransactionSimulator
 {
@@ -33,6 +34,8 @@ private:
   std::map<std::string, int> shelf_lives;
   std::map<std::string, std::string> names;
   std::map<std::string, Warehouse> warehouses;
+  std::queue<std::string> received;
+  std::queue<std::string> requested;
 };
 
 #endif

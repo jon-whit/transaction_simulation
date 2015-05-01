@@ -99,11 +99,47 @@ void TransactionSimulator::run_simulation(std::string _filename)
       // add or remove the food item to the warehouses inventory depending
       // on the instruction
       if (instruction == "Receive:")
-        warehouses[location].receive_food_item(upc, n, shelf_life);
+        received.push(upc + " " + to_string(shelf_life) + " " + location);
+        //warehouses[location].receive_food_item(upc, n, shelf_life);
       else
-        warehouses[location].remove_food_item(upc, n);
+        requested.push(upc + " " + to_string(n) + " " + location);
+        //warehouses[location].remove_food_item(upc, n);
 
     } else if (instruction == "Next") {
+
+      // at the beginning of the day, process all of the previous
+      // days items in order of received and requested.
+      while (!received.empty())
+      {
+        // split the line based on whitespace
+        string item = received.front();
+
+        std::vector<std::string> params;
+        boost::split(params, item, boost::is_any_of(" "));
+
+        string upc = params[0];
+        string location = params[2];
+        int n = boost::lexical_cast<int>(params[1]);
+
+        warehouses[location].receive_food_item(upc, n, shelf_lives[upc]);
+        received.pop();
+      }
+
+      while (!requested.empty())
+      {
+        // split the line based on whitespace
+        string item = requested.front();
+
+        std::vector<std::string> params;
+        boost::split(params, item, boost::is_any_of(" "));
+
+        string upc = params[0];
+        string location = params[2];
+        int n = boost::lexical_cast<int>(params[1]);
+
+        warehouses[location].remove_food_item(upc, n);
+        requested.pop();
+      }
 
       #ifdef DEBUG
         cout << line << endl;
