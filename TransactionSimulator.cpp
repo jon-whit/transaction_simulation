@@ -16,6 +16,8 @@
 #include <boost/algorithm/string/classification.hpp>
 #include <boost/lexical_cast.hpp>
 
+//#define DEBUG 1
+
 using namespace std;
 
 TransactionSimulator::TransactionSimulator()
@@ -99,7 +101,7 @@ void TransactionSimulator::run_simulation(std::string _filename)
       // add or remove the food item to the warehouses inventory depending
       // on the instruction
       if (instruction == "Receive:")
-        received.push(upc + " " + to_string(shelf_life) + " " + location);
+        received.push(upc + " " + to_string(n) + " " + location);
         //warehouses[location].receive_food_item(upc, n, shelf_life);
       else
         requested.push(upc + " " + to_string(n) + " " + location);
@@ -107,50 +109,55 @@ void TransactionSimulator::run_simulation(std::string _filename)
 
     } else if (instruction == "Next") {
 
-      // at the beginning of the day, process all of the previous
-      // days items in order of received and requested.
-      while (!received.empty())
-      {
-        // split the line based on whitespace
-        string item = received.front();
-
-        std::vector<std::string> params;
-        boost::split(params, item, boost::is_any_of(" "));
-
-        string upc = params[0];
-        string location = params[2];
-        int n = boost::lexical_cast<int>(params[1]);
-
-        warehouses[location].receive_food_item(upc, n, shelf_lives[upc]);
-        received.pop();
-      }
-
-      while (!requested.empty())
-      {
-        // split the line based on whitespace
-        string item = requested.front();
-
-        std::vector<std::string> params;
-        boost::split(params, item, boost::is_any_of(" "));
-
-        string upc = params[0];
-        string location = params[2];
-        int n = boost::lexical_cast<int>(params[1]);
-
-        warehouses[location].remove_food_item(upc, n);
-        requested.pop();
-      }
-
       #ifdef DEBUG
         cout << line << endl;
       #endif
+
+            // at the beginning of the day, process all of the previous
+            // days items in order of received and requested.
+            while (!received.empty())
+            {
+              // split the line based on whitespace
+              string item = received.front();
+
+              std::vector<std::string> params;
+              boost::split(params, item, boost::is_any_of(" "));
+
+              string upc = params[0];
+              string location = params[2];
+              int n = boost::lexical_cast<int>(params[1]);
+
+              warehouses[location].receive_food_item(upc, n, shelf_lives[upc]);
+              #ifdef DEBUG
+                cout << "RECEIVED ITEM: " + upc + "x" + to_string(n) << " IN WAREHOUSE " << location << endl;
+              #endif
+              received.pop();
+            }
+
+            while (!requested.empty())
+            {
+              // split the line based on whitespace
+              string item = requested.front();
+
+              std::vector<std::string> params;
+              boost::split(params, item, boost::is_any_of(" "));
+
+              string upc = params[0];
+              string location = params[2];
+              int n = boost::lexical_cast<int>(params[1]);
+
+              warehouses[location].remove_food_item(upc, n);
+              #ifdef DEBUG
+                cout << "REMOVING ITEM: " + upc + "x" + to_string(n) << " FROM " << location << endl;
+              #endif
+              requested.pop();
+            }
 
       // iterator over each of the warehouses
       map<string, Warehouse >::iterator it;
       for(it = warehouses.begin(); it != warehouses.end(); it++)
       {
           string location = it->first;
-
           warehouses[location].remove_expired();
       }
 
@@ -159,7 +166,47 @@ void TransactionSimulator::run_simulation(std::string _filename)
       #endif
 
     } else if (instruction == "End") {
-       cout << "Report by Jonathan Whitaker and Christopher Hartley" << endl << endl;
+
+        // process the last transactions
+        while (!received.empty())
+        {
+          // split the line based on whitespace
+          string item = received.front();
+
+          std::vector<std::string> params;
+          boost::split(params, item, boost::is_any_of(" "));
+
+          string upc = params[0];
+          string location = params[2];
+          int n = boost::lexical_cast<int>(params[1]);
+
+          warehouses[location].receive_food_item(upc, n, shelf_lives[upc]);
+          #ifdef DEBUG
+            cout << "RECEIVED ITEM: " + upc + "x" + to_string(n) << " IN WAREHOUSE " << location << endl;
+          #endif
+          received.pop();
+        }
+
+        while (!requested.empty())
+        {
+          // split the line based on whitespace
+          string item = requested.front();
+
+          std::vector<std::string> params;
+          boost::split(params, item, boost::is_any_of(" "));
+
+          string upc = params[0];
+          string location = params[2];
+          int n = boost::lexical_cast<int>(params[1]);
+
+          warehouses[location].remove_food_item(upc, n);
+          #ifdef DEBUG
+            cout << "REMOVING ITEM: " + upc + "x" + to_string(n) << " FROM " << location << endl;
+          #endif
+          requested.pop();
+        }
+
+       cout << "Report by Jonathan Whitaker" << endl << endl;
        get_unstocked_products();
        get_wellstocked_products();
     }
